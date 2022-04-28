@@ -8,6 +8,7 @@ function App() {
   const [dataValues, setDataValues] = useState([])
 
 
+  console.log("done");
   const getData = async () => {
     const post = await axios.get("https://jsonplaceholder.typicode.com/todos")
     setDataValues(post.data)
