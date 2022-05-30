@@ -26,7 +26,8 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("https://guarded-crag-39247.herokuapp.com/api/todo", formValues).then(() => console.log("done"))
+    await axios.post("https://guarded-crag-39247.herokuapp.com/api/todo", formValues).then(() => console.log("post done"))
+    setFormValues(initialValue)
   }
 
   const handleDelete = async (_id) => {
@@ -50,14 +51,15 @@ function App() {
   const handleUpdate = async (e) => {
 
     e.preventDefault();
-    await axios.put(`https://guarded-crag-39247.herokuapp.com/api/todo/${UpdateID}`, formValues).then(() => console.log("Update Done"))
+    await axios.put(`https://guarded-crag-39247.herokuapp.com/api/todo/${UpdateID}`, formValues).then(() => setFormValues(initialValue)).then(() => console.log("Update Done"))
+
   }
 
 
 
   useEffect(() => {
     getData();
-  }, [])
+  }, [dataValues])
 
 
   return (
