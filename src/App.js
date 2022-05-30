@@ -3,12 +3,12 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import TodoCard from './Components/TodoCard';
+import Form from './Components/Form';
 
 function App() {
   const initialValue = { title: "", priority: "", brief: "" }
 
   const [dataValues, setDataValues] = useState([])
-  const [sendData, setSendData] = useState()
 
   const [formValues, setFormValues] = useState(initialValue)
 
@@ -32,6 +32,13 @@ function App() {
 
   }
 
+  const handleDelete = async (_id) => {
+    const DuplicateData = [...dataValues];
+    const FilteredDatas = DuplicateData.filter(c => c._id !== _id);
+    setDataValues(FilteredDatas)
+    await axios.delete(`https://guarded-crag-39247.herokuapp.com/api/todo/${_id}`).then(() => console.log("Done"))
+  }
+
 
 
   useEffect(() => {
@@ -40,21 +47,18 @@ function App() {
 
 
   return (
-    <div className="App">
+    <div style={{ height: "100vh", width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-evenly" }} >
 
 
-      <h2>helo</h2>
-      {dataValues.map(d => (
-        <TodoCard priority={d.priority} brief={d.brief} title={d.title} key={d._id} />
-      ))}
-      <div>
-        <form onSubmit={handleSubmit} >
-          <input placeholder='Title' onChange={handleChange} value={formValues.title} name="title"  ></input>
-          <input placeholder='Priority' onChange={handleChange} value={formValues.priority} name="priority"   ></input>
-          <input placeholder='Brief' onChange={handleChange} value={formValues.brief} name="brief" ></input>
-          <button type='submit' >Submit</button>
-        </form>
+      <div style={{ alignSelf: "center" }} >
+        <Form handleChange={handleChange} formValues={formValues} handleSubmit={handleSubmit} />
       </div>
+      <div>
+        {dataValues.map(d => (
+          <TodoCard handleDelete={() => handleDelete(d._id)} priority={d.priority} brief={d.brief} title={d.title} key={d._id} />
+        ))}
+      </div>
+
     </div>
   );
 }
