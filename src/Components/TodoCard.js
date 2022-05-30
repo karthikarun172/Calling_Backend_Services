@@ -1,6 +1,6 @@
 import React from 'react'
 
-function TodoCard({ title, priority, brief, handleDelete }) {
+function TodoCard({ title, priority, brief, handleDelete, handleUpdate }) {
     return (
         <div style={{ height: "150px", width: "250px", margin: "10px", backgroundColor: "gray", display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }} >
             <div>
@@ -11,6 +11,7 @@ function TodoCard({ title, priority, brief, handleDelete }) {
                 <h3>{priority}</h3>
                 <div>
                     <button onClick={handleDelete} style={{ backgroundColor: "red", border: "none" }} >Delete</button>
+                    <button onClick={handleUpdate} style={{ backgroundColor: "black", border: "none" }} >Update</button>
                 </div>
             </div>
 
